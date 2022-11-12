@@ -137,66 +137,122 @@ namespace DangoteMT940
         //            {
         //                timer.Enabled = false;
 
-            //                //Load dp_history zenbase all data the first time, new data subsequent times
-            //                List<AseParameter> aseparameters = GetAseParametersMini();
-            //                DataTable res = ExecuteSybaseScript(con2, aseparameters, "Isp_InsertDpHistory", "2");
+        //                //Load dp_history zenbase all data the first time, new data subsequent times
+        //                List<AseParameter> aseparameters = GetAseParametersMini();
+        //                DataTable res = ExecuteSybaseScript(con2, aseparameters, "Isp_InsertDpHistory", "2");
 
-            //                //load selected columns from Dangote Collections
-            //                string sqlmaxitbid = "select MaxItbid from DangoteMt940config";
-            //                Int64 maxid = db1.ExecuteScalar<Int64>(sqlmaxitbid);
-            //                SqlCommand cmd = new SqlCommand();
-            //                cmd.Connection = db1;
-            //                var sql3 = "select a.itbid, a.cr_account_no, a.cr_account_name, a.cr_account_type, a.customer_number, a.customer_name, a.amount, isnull(a.deposit_slip_no,a.teller_no) as deposit_slip_no, a.date_created from DangoteCollectionTransaction a, CBSTransaction b where a.CBSTransId = b.ItbId and b.reversal = 0 and b.PostingErrorCode = 0 and a.cr_account_no = @Acctno and a.cr_account_type= @Accttype and a.itbid > @Itbid and a.trans_error_code = @Error";
-            //                cmd.CommandText = sql3;
-            //                cmd.Parameters.Add("@Acctno", SqlDbType.VarChar).Value = acctno;
-            //                cmd.Parameters.Add("@Accttype", SqlDbType.VarChar).Value = accttype;
-            //                cmd.Parameters.Add("@Error", SqlDbType.VarChar).Value = 0;
-            //                cmd.Parameters.Add("@Itbid", SqlDbType.VarChar).Value = maxid;
+        //                //load selected columns from Dangote Collections
+        //                string sqlmaxitbid = "select MaxItbid from DangoteMt940config";
+        //                Int64 maxid = db1.ExecuteScalar<Int64>(sqlmaxitbid);
+        //                SqlCommand cmd = new SqlCommand();
+        //                cmd.Connection = db1;
+        //                var sql3 = "select a.itbid, a.cr_account_no, a.cr_account_name, a.cr_account_type, a.customer_number, a.customer_name, a.amount, isnull(a.deposit_slip_no,a.teller_no) as deposit_slip_no, a.date_created from DangoteCollectionTransaction a, CBSTransaction b where a.CBSTransId = b.ItbId and b.reversal = 0 and b.PostingErrorCode = 0 and a.cr_account_no = @Acctno and a.cr_account_type= @Accttype and a.itbid > @Itbid and a.trans_error_code = @Error";
+        //                cmd.CommandText = sql3;
+        //                cmd.Parameters.Add("@Acctno", SqlDbType.VarChar).Value = acctno;
+        //                cmd.Parameters.Add("@Accttype", SqlDbType.VarChar).Value = accttype;
+        //                cmd.Parameters.Add("@Error", SqlDbType.VarChar).Value = 0;
+        //                cmd.Parameters.Add("@Itbid", SqlDbType.VarChar).Value = maxid;
 
-            //                DataTable dangoteCollection = new DataTable();
-            //                dangoteCollection.Load(cmd.ExecuteReader());
-            //                int o = InsertDataZenbaseTable(dangoteCollection, con2);
-            //                if (o == 222)
-            //                {
-            //                    //List<AseParameter> aseParam = GetAseParameters();
-            //                    //DataTable statementData = ExecuteSybaseScript(con, aseParam, "isp_Dangote940Stmt", "1");
-            //                    if (statementData != null)
-            //                    {
-            //                        //var loadresult = InsertDatatoTPMTable(statementData);
-            //                        string statementstring = MT940Mapper.Generate940String(statementData);
-            //                        string filename = string.Format("DangoteStatement_{0}.txt", string.Format("{0:dd_MMM_yyyy}", DateTime.Now.AddDays(-1)));
-            //                        //string filename = string.Format("{0}{1}", "DangoteStatement_", string.Format("{0:dd_MMM_yyyy}", DateTime.Now.AddDays(-1)),".txt");
-            //                        string path2 = path + filename;
-            //                        File.WriteAllText(path2, statementstring);
-            //                        if (File.Exists(path2))
-            //                        {
-            //                            var emailsent = SendStatementEmail(path2);
-            //                            string date = ExecuteSybaseGetlasttodate(con);
-            //                            var dateprocessed = new { Dateproc = DateTime.ParseExact(date, "yyyy-MM-dd", CultureInfo.InvariantCulture) };
-            //                            var sqlstr = "update DangoteMt940config set LastGeneratedDate = @Dateproc";
-            //                            var setid = db1.Execute(sqlstr, dateprocessed);
-            //                        }
-            //                        db1.Close();
-            //                        timer.Enabled = true;
-            //                    }
-            //                    //DataSetObj.Tables["Table_Name"].Rows[rowIndex]["column_name"]
-            //                }
-            //            }
-            //        }
+        //                DataTable dangoteCollection = new DataTable();
+        //                dangoteCollection.Load(cmd.ExecuteReader());
+        //                int o = InsertDataZenbaseTable(dangoteCollection, con2);
+        //                if (o == 222)
+        //                {
+        //                    //List<AseParameter> aseParam = GetAseParameters();
+        //                    //DataTable statementData = ExecuteSybaseScript(con, aseParam, "isp_Dangote940Stmt", "1");
+        //                    if (statementData != null)
+        //                    {
+        //                        //var loadresult = InsertDatatoTPMTable(statementData);
+        //                        string statementstring = MT940Mapper.Generate940String(statementData);
+        //                        string filename = string.Format("DangoteStatement_{0}.txt", string.Format("{0:dd_MMM_yyyy}", DateTime.Now.AddDays(-1)));
+        //                        //string filename = string.Format("{0}{1}", "DangoteStatement_", string.Format("{0:dd_MMM_yyyy}", DateTime.Now.AddDays(-1)),".txt");
+        //                        string path2 = path + filename;
+        //                        File.WriteAllText(path2, statementstring);
+        //                        if (File.Exists(path2))
+        //                        {
+        //                            var emailsent = SendStatementEmail(path2);
+        //                            string date = ExecuteSybaseGetlasttodate(con);
+        //                            var dateprocessed = new { Dateproc = DateTime.ParseExact(date, "yyyy-MM-dd", CultureInfo.InvariantCulture) };
+        //                            var sqlstr = "update DangoteMt940config set LastGeneratedDate = @Dateproc";
+        //                            var setid = db1.Execute(sqlstr, dateprocessed);
+        //                        }
+        //                        db1.Close();
+        //                        timer.Enabled = true;
+        //                    }
+        //                    //DataSetObj.Tables["Table_Name"].Rows[rowIndex]["column_name"]
+        //                }
+        //            }
+        //        }
 
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        MT940Model.WriteToFile(string.Format("rror: {0}", ex.Message == null ? ex.InnerException.Message : ex.Message));
-            //    }
-            //    finally
-            //    {
-            //        timer.Enabled = true;
-            //    }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        MT940Model.WriteToFile(string.Format("rror: {0}", ex.Message == null ? ex.InnerException.Message : ex.Message));
+        //    }
+        //    finally
+        //    {
+        //        timer.Enabled = true;
+        //    }
 
-            //}
+        //}
 
-            private bool SendStatementEmail(string path)
+        public static DataTable GetMT940(int acct)
+        {
+
+            List<MT940Setup> atrlist = new List<MT940Setup>();
+
+            try
+            {
+                using (var con = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["defaultCon"].ToString()))
+                {
+
+                    for (int i = 0; i < acct; i++)
+                    {
+                        con.Open();
+                        MT940Setup atr = new MT940Setup();
+                        using (SqlCommand cmd = new SqlCommand())
+                        {
+                            cmd.Connection = con;
+                            cmd.CommandText = "isp_GetTransReference";
+                            cmd.CommandType = CommandType.StoredProcedure;
+                            SqlParameter Channel = new SqlParameter("psChannel", SqlDbType.VarChar) { Value = "DANGOTE" };
+
+                            SqlParameter AcctNo = new SqlParameter("@rsTransRef", SqlDbType.VarChar, 16); AcctNo.Direction = ParameterDirection.Output;
+                            SqlParameter ErrorCode = new SqlParameter("@rnErrorCode", SqlDbType.Int); ErrorCode.Direction = ParameterDirection.Output;
+                            SqlParameter ErrorMsg = new SqlParameter("@rsErrorMsg", SqlDbType.VarChar, 200); ErrorMsg.Direction = ParameterDirection.Output;
+
+                            cmd.Parameters.Add(Channel);
+                            cmd.Parameters.Add(AcctNo);
+                            cmd.Parameters.Add(ErrorCode);
+                            cmd.Parameters.Add(ErrorMsg);
+                            var dr = cmd.ExecuteReader();
+
+                            dr.Close();
+                            con.Close();
+
+                            atr.transref = cmd.Parameters["@rsTransRef"].Value.ToString();
+                            atr.errorcode = Convert.ToInt32(cmd.Parameters["@rnErrorCode"].Value);
+                            atr.errormsg = cmd.Parameters["@rsErrorMsg"].Value.ToString();
+
+
+
+                        }
+                        atrlist.Add(atr);
+                    }
+                    var ret = ListToDataTable<MT940Setup>(atrlist);
+                    return ret;
+                }
+            }
+            catch (Exception ex)
+            {
+                MT940Model.WriteToFile(string.Format("Automatic Transaction Ref Error: {0}", ex.Message == null ? ex.InnerException.Message : ex.Message));
+                return null;
+
+            }
+
+        }
+
+        private bool SendStatementEmail(string path)
         {
             try
             {

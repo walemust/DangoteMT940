@@ -326,4 +326,48 @@ namespace DangoteMT940
 
         public string SwiftMT103DebitAdviceSubject { get; set; }
     }
+
+    public class companyProfile
+    {
+        public int acctno { get; set; }
+        public string CompanyCoode { get; set; }
+        public string CompanyName { get; set; }
+        public string address { get; set; }
+        public long phoneno { get; set; }
+        public DateTime DateCreated { get; set; }
+        public DateTime SessionIdleTime { get; set; }
+        public int LoginAttempts { get; set; }
+        public string BankingSystem { get; set; }
+        public string EmailAddress { get; set; }
+        public string AllowAuth { get; set; }
+        public string ImageCss { get; set; }
+        public string VerifierMailFormat { get; set; }
+        public string ApproverMailFormat { get; set; }
+        public int BankUserId { get; set; }
+        public int BankAuthId { get; set; }
+        public string AccountStatus { get; set; }
+        public int ClassCode { get; set; }
+        public string AcctType { get; set; }
+        public int CustNo { get; set; }
+        public string NotificationMedium { get; set; }
+        public string Status { get; set; }
+        public int LocalCrncyUserLimit { get; set; }
+        public int FxCrncyUserLimit { get; set; }
+        public int LocalCrncyTransactionLimit { get; set; }
+        public string ExtensionPeriod { get; set; }
+        public string ExtensionPeriodTime { get; set; }
+        public string MT940GenerationDate { get; set; }
+        public string MT940GenerationCount { get; set; }
+    }
+
+    public class MT940Setup
+    {
+        public int AcctNo { get; set; }
+        public int StateAcctNo { get; set; }
+        public string TimeToDownload { get; set; }
+        public string Status { get; set; }
+        public int UserId { get; set; }
+        public string SenderSwiftCode { get; set; }
+        public string ReceiverSwiftCode { get; set; }
+    }
 }
