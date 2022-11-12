@@ -196,6 +196,19 @@ namespace DangoteMT940
 
         //}
 
+        public static DataTable ListToDataTable<MT940Setup>(IEnumerable<MT940Setup> list)
+        {
+            var properties = typeof(MT940Setup).GetProperties();
+            var dataTable = new DataTable();
+            foreach (var info in properties)
+                dataTable.Columns.Add(info.Name, Nullable.GetUnderlyingType(info.PropertyType)
+                   ?? info.PropertyType);
+            foreach (var entity in list)
+                dataTable.Rows.Add(properties.Select(p => p.GetValue(entity)).ToArray());
+
+            return dataTable;
+        }
+
         public static DataTable GetMT940(int acct)
         {
 
@@ -217,22 +230,22 @@ namespace DangoteMT940
                             cmd.CommandType = CommandType.StoredProcedure;
                             SqlParameter Channel = new SqlParameter("psChannel", SqlDbType.VarChar) { Value = "DANGOTE" };
 
-                            SqlParameter AcctNo = new SqlParameter("@rsTransRef", SqlDbType.VarChar, 16); AcctNo.Direction = ParameterDirection.Output;
-                            SqlParameter ErrorCode = new SqlParameter("@rnErrorCode", SqlDbType.Int); ErrorCode.Direction = ParameterDirection.Output;
-                            SqlParameter ErrorMsg = new SqlParameter("@rsErrorMsg", SqlDbType.VarChar, 200); ErrorMsg.Direction = ParameterDirection.Output;
+                            SqlParameter AcctNo = new SqlParameter("@rsTransRef", SqlDbType.Int); AcctNo.Direction = ParameterDirection.Output;
+                            SqlParameter StateAcctNo = new SqlParameter("@rnErrorCode", SqlDbType.Int); StateAcctNo.Direction = ParameterDirection.Output;
+                            SqlParameter TimeToDownload = new SqlParameter("@rsErrorMsg", SqlDbType.VarChar, 200); TimeToDownload.Direction = ParameterDirection.Output;
 
                             cmd.Parameters.Add(Channel);
                             cmd.Parameters.Add(AcctNo);
-                            cmd.Parameters.Add(ErrorCode);
-                            cmd.Parameters.Add(ErrorMsg);
+                            cmd.Parameters.Add(StateAcctNo);
+                            cmd.Parameters.Add(TimeToDownload);
                             var dr = cmd.ExecuteReader();
 
                             dr.Close();
                             con.Close();
 
-                            atr.transref = cmd.Parameters["@rsTransRef"].Value.ToString();
-                            atr.errorcode = Convert.ToInt32(cmd.Parameters["@rnErrorCode"].Value);
-                            atr.errormsg = cmd.Parameters["@rsErrorMsg"].Value.ToString();
+                            atr.AcctNo = Convert.ToInt32(cmd.Parameters["@rsTransRef"].Value);
+                            atr.StateAcctNo = Convert.ToInt32(cmd.Parameters["@rnErrorCode"].Value);
+                            atr.TimeToDownload = cmd.Parameters["@rsErrorMsg"].Value.ToString();
 
 
 
