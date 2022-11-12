@@ -226,13 +226,13 @@ namespace DangoteMT940
                         using (SqlCommand cmd = new SqlCommand())
                         {
                             cmd.Connection = con;
-                            cmd.CommandText = "isp_GetTransReference";
+                            cmd.CommandText = "isp_IB_Acct94StmtValDt";
                             cmd.CommandType = CommandType.StoredProcedure;
                             SqlParameter Channel = new SqlParameter("psChannel", SqlDbType.VarChar) { Value = "DANGOTE" };
 
-                            SqlParameter AcctNo = new SqlParameter("@rsTransRef", SqlDbType.Int); AcctNo.Direction = ParameterDirection.Output;
-                            SqlParameter StateAcctNo = new SqlParameter("@rnErrorCode", SqlDbType.Int); StateAcctNo.Direction = ParameterDirection.Output;
-                            SqlParameter TimeToDownload = new SqlParameter("@rsErrorMsg", SqlDbType.VarChar, 200); TimeToDownload.Direction = ParameterDirection.Output;
+                            SqlParameter AcctNo = new SqlParameter("@rsAccountNo", SqlDbType.Int); AcctNo.Direction = ParameterDirection.Output;
+                            SqlParameter StateAcctNo = new SqlParameter("@rnStateAccountNo", SqlDbType.Int); StateAcctNo.Direction = ParameterDirection.Output;
+                            SqlParameter TimeToDownload = new SqlParameter("@rsTimeToDownload", SqlDbType.VarChar, 200); TimeToDownload.Direction = ParameterDirection.Output;
 
                             cmd.Parameters.Add(Channel);
                             cmd.Parameters.Add(AcctNo);
@@ -243,9 +243,9 @@ namespace DangoteMT940
                             dr.Close();
                             con.Close();
 
-                            atr.AcctNo = Convert.ToInt32(cmd.Parameters["@rsTransRef"].Value);
-                            atr.StateAcctNo = Convert.ToInt32(cmd.Parameters["@rnErrorCode"].Value);
-                            atr.TimeToDownload = cmd.Parameters["@rsErrorMsg"].Value.ToString();
+                            atr.AcctNo = Convert.ToInt32(cmd.Parameters["@rsAccountNo"].Value);
+                            atr.StateAcctNo = Convert.ToInt32(cmd.Parameters["@rnStateAccountNo"].Value);
+                            atr.TimeToDownload = cmd.Parameters["@rsTimeToDownload"].Value.ToString();
 
 
 
