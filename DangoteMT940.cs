@@ -8,6 +8,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net.Mail;
+using System.ServiceProcess;
 using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
@@ -15,7 +16,7 @@ using System.Web;
 
 namespace DangoteMT940
 {
-    public partial class DangoteMT940
+    public partial class DangoteMT940 : ServiceBase
     {
         Timer timer = new Timer();
         //public DangoteMT940()
@@ -25,11 +26,13 @@ namespace DangoteMT940
         protected void OnStart(string[] args)
         {
             int timeinterval = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["timeint"]);
+            GetMT940(int, 6010122856);
             MT940Model.WriteToFile("Service is started at " + DateTime.Now);
             timer.Elapsed += new ElapsedEventHandler(OnElapsedTime);
+            //timer.Elapsed += new ElapsedEventHandler(GetMT940);
             timer.Interval = 10000; //1hour 1000 is 1sec  
             //timer.Interval = 36000000; //10hours for deploy  
-            timer.Enabled = true;
+            timer.Enabled = false;
         }
         protected void OnStop()
         {
