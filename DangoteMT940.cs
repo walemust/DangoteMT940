@@ -19,14 +19,16 @@ namespace DangoteMT940
     public partial class DangoteMT940 : ServiceBase
     {
         Timer timer = new Timer();
-        //public DangoteMT940()
-        //{
-        //    InitializeComponent();
-        //}
+
+        //int acct = 0;
+        public DangoteMT940()
+        {
+            InitializeComponent();
+        }
         protected void OnStart(string[] args)
         {
             int timeinterval = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["timeint"]);
-            GetMT940(int, 6010122856);
+            GetMT940("6010122856");  
             MT940Model.WriteToFile("Service is started at " + DateTime.Now);
             timer.Elapsed += new ElapsedEventHandler(OnElapsedTime);
             //timer.Elapsed += new ElapsedEventHandler(GetMT940);
@@ -212,17 +214,18 @@ namespace DangoteMT940
             return dataTable;
         }
 
-        public static DataTable GetMT940(int acct)
+        public static DataTable GetMT940(string acct)
         {
 
             List<MT940Setup> atrlist = new List<MT940Setup>();
-
+            
+           
             try
             {
                 using (var con = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["defaultCon"].ToString()))
                 {
 
-                    for (int i = 0; i < acct; i++)
+                    for (int i = 0; i < acct.Length; i++)
                     {
                         con.Open();
                         MT940Setup atr = new MT940Setup();
